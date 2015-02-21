@@ -18,6 +18,8 @@ public class DetailsActivity extends ActionBarActivity {
         String name= this.getIntent().getExtras().getString("name");
         TextView textView = (TextView) this.findViewById(R.id.textView2);
         textView.setText(name);
+
+        TextView name = (TextView) this.findViewById(R.id.)
     }
 
 

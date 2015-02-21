@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     ListView listView;
     List<String> names;
+    int REQUEST_CODE = 111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,8 @@ public class MainActivity extends ActionBarActivity {
         names.add("Ahmad");
         names.add("Karam");
         names.add("majed");
-//        String[] names = getResources().getStringArray(R.array.names);
+
+        Button bAdd= (Button) this.findViewById(R.id.add);
         listView = (ListView) this.findViewById(R.id.listView);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, R.id.textView, names);
         listView.setAdapter(adapter);
@@ -35,13 +38,22 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                 intent.putExtra("name",listView.getItemAtPosition(position).toString());
-                MainActivity.this.startActivity(intent);
+                MainActivity.this.startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+        bAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
-
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
