@@ -1,6 +1,7 @@
 package com.example.ahmadlap.intentlist;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,21 +21,20 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     ListView listView;
     List<String> names;
-    int REQUEST_CODE = 111;
+    List<String> phones;
+    public static int REQUEST_CODE = 111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        names = new ArrayList<String>();
-        names.add("Mohammed");
-        names.add("Ahmad");
-        names.add("Karam");
-        names.add("majed");
 
-        Button bAdd= (Button) this.findViewById(R.id.add);
+        names = new ArrayList<String>();
+        phones = new ArrayList<String>();
+
         listView = (ListView) this.findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, R.id.textView, names);
+        PersonListAdapter adapter = new PersonListAdapter(getApplicationContext(), R.layout.list_item, names,phones);
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -41,17 +43,41 @@ public class MainActivity extends ActionBarActivity {
                 MainActivity.this.startActivityForResult(intent, REQUEST_CODE);
             }
         });
-        bAdd.setOnClickListener(new View.OnClickListener() {
+
+        ImageButton bAddPerson= (ImageButton) this.findViewById(R.id.add);
+        bAddPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddDetails.class);
+                MainActivity.this.startActivityForResult(intent,REQUEST_CODE);
 
             }
         });
+//        ImageButton bDeletePerson = (ImageButton) this.findViewById(R.id.deletePerson);
+//        bDeletePerson.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                names.remove(listView.getItemAtPosition())
+//            }
+//        });  ImageButton bDeletePerson = (ImageButton) this.findViewById(R.id.deletePerson);
+
+
+    }
+
+    public void deletePerson(View view) {
+        String name = (String)view.getTag();
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MainActivity.REQUEST_CODE && resultCode == AddDetails.RESULT_CODE) {
+            names.add(data.getStringExtra("name"));
+            phones.add(data.getStringExtra("phone"));
+//            Toast.makeText(getApplicationContext(),data.getStringExtra("name"),Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),data.getStringExtra("phone"),Toast.LENGTH_SHORT).show();
+        }
 
     }
 
