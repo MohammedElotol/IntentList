@@ -1,28 +1,26 @@
 package com.example.ahmadlap.intentlist;
 
 import android.content.Intent;
-import android.media.Image;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements PersonListAdapter.CustomButtonListener {
+    public static int REQUEST_CODE = 111;
     ListView listView;
+    PersonListAdapter adapter;
     List<String> names;
     List<String> phones;
-    public static int REQUEST_CODE = 111;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +30,8 @@ public class MainActivity extends ActionBarActivity {
         phones = new ArrayList<String>();
 
         listView = (ListView) this.findViewById(R.id.listView);
-        PersonListAdapter adapter = new PersonListAdapter(getApplicationContext(), R.layout.list_item, names,phones);
+        adapter = new PersonListAdapter(getApplicationContext(), R.layout.list_item, names,phones);
+        adapter.setCustomButtonListener(MainActivity.this);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -44,8 +43,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        ImageButton bAddPerson= (ImageButton) this.findViewById(R.id.add);
-        bAddPerson.setOnClickListener(new View.OnClickListener() {
+        ImageButton iBAddPerson= (ImageButton) this.findViewById(R.id.add);
+        iBAddPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddDetails.class);
@@ -64,10 +63,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public void deletePerson(View view) {
-        String name = (String)view.getTag();
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -101,5 +96,12 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onButtonClickListener(int position) {
+        names.remove(position);
+        phones.remove(position);
+        adapter.notifyDataSetChanged();
     }
 }

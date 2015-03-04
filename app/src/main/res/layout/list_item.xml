@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="horizontal"
     >
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="7">
+        android:layout_weight="7"
+        android:orientation="vertical">
         <TextView
+            android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:textColor="#d63040be"
             android:text="hi"
-            android:id="@+id/tvName"
+            android:textColor="#d63040be"
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/tvPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:textSize="20sp"
             android:text="New Text"
-            android:id="@+id/tvPhone"/>
+            android:textSize="20sp"/>
     </LinearLayout>
     <ImageButton
+        android:id="@+id/deletePerson"
         android:layout_width="10dp"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_remove"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:background="@color/background_material_light"
-        android:layout_gravity="center_vertical"
-        android:id="@+id/deletePerson"
-        android:onClick="removePerson"/>
+        android:src="@drawable/ic_remove"
+       />
 </LinearLayout>
