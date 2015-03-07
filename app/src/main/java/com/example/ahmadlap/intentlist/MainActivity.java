@@ -27,7 +27,13 @@ public class MainActivity extends ActionBarActivity implements PersonListAdapter
         setContentView(R.layout.activity_main);
 
         names = new ArrayList<String>();
+        names.add("Mohammed");
+        names.add("Ahmad");
+        names.add("Ali");
         phones = new ArrayList<String>();
+        phones.add("123456");
+        phones.add("654321");
+        phones.add("147258");
 
         listView = (ListView) this.findViewById(R.id.listView);
         adapter = new PersonListAdapter(getApplicationContext(), R.layout.list_item, names,phones);
