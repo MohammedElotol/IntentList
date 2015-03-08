@@ -27,24 +27,24 @@ public class PersonListAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        if(convertView == null){/*To reduce creating new inflaters (previously uncreated) */
+        ViewHolder holder;
+        if (convertView == null) {/*To reduce creating new inflaters (previously uncreated) */
 
-            LayoutInflater inflater= (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_item, parent, false);
 
-            TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
-            TextView tvPhone= (TextView) convertView.findViewById(R.id.tvPhone);
-            ImageButton iBDelete = (ImageButton) convertView.findViewById(R.id.deletePerson);
-            ViewHolder viewHolder= new ViewHolder();
-            viewHolder.holdedName=tvName;
-            viewHolder.holdedPhone=tvPhone;
-            viewHolder.iBDelete = iBDelete;
-            convertView.setTag(viewHolder);// To attach an Object to view
+            holder = new ViewHolder();
+            holder.holdedName = (TextView) convertView.findViewById(R.id.tvName);
+            holder.holdedPhone = (TextView) convertView.findViewById(R.id.tvPhone);
+            holder.iBDelete = (ImageButton) convertView.findViewById(R.id.deletePerson);
+            convertView.setTag(holder);// To attach an Object to view
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+
         }
-        ViewHolder viewHolder= (ViewHolder) convertView.getTag();
-        viewHolder.holdedName.setText(names.get(position));
-        viewHolder.holdedPhone.setText(phones.get(position));
-        viewHolder.iBDelete.setOnClickListener(new View.OnClickListener() {
+        holder.holdedName.setText(names.get(position));
+        holder.holdedPhone.setText(phones.get(position));
+        holder.iBDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (customListener != null) {
